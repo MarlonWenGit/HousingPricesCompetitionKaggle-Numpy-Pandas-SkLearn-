@@ -128,5 +128,5 @@ submission = pd.DataFrame({
     "Id": get_home_data('test')["Id"],
     "SalePrice": predictions
 })
-submission.to_csv("my_submission.csv", index=False)
+submission.to_csv("submission.csv", index=False)
 
