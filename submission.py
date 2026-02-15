@@ -16,50 +16,56 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
 # You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
 # You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
 
-# Get the csv table data
-data_path = "/kaggle/input/home-data-for-ml-course/train.csv"
-home_data = pd.read_csv(data_path)
-
-# Check available table attributes
-print(home_data.columns)
-
 from sklearn.model_selection import train_test_split
 
-# What attribute to predict
-y = home_data.SalePrice
+def get_home_data(csv_name):
+    data_path = f"/kaggle/input/home-data-for-ml-course/{csv_name}.csv"
+    return pd.read_csv(data_path)
 
-# What attributes to use to train the model
-features = ['Id', 'MSSubClass', 'MSZoning', 'LotFrontage', 'LotArea', 'Street',
-       'Alley', 'LotShape', 'LandContour', 'Utilities', 'LotConfig',
-       'LandSlope', 'Neighborhood', 'Condition1', 'Condition2', 'BldgType',
-       'HouseStyle', 'OverallQual', 'OverallCond', 'YearBuilt', 'YearRemodAdd',
-       'RoofStyle', 'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType',
-       'MasVnrArea', 'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual',
-       'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1',
-       'BsmtFinType2', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'Heating',
-       'HeatingQC', 'CentralAir', 'Electrical', '1stFlrSF', '2ndFlrSF',
-       'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath',
-       'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'KitchenQual',
-       'TotRmsAbvGrd', 'Functional', 'Fireplaces', 'FireplaceQu', 'GarageType',
-       'GarageYrBlt', 'GarageFinish', 'GarageCars', 'GarageArea', 'GarageQual',
-       'GarageCond', 'PavedDrive', 'WoodDeckSF', 'OpenPorchSF',
-       'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea', 'PoolQC',
-       'Fence', 'MiscFeature', 'MiscVal', 'MoSold', 'YrSold', 'SaleType',
-       'SaleCondition']
-X = home_data[features]
+def get_data(csv_name):
+    # Get the csv table data
+    home_data = get_home_data(csv_name)
+    
+    # What attributes to use to train the model
+    features = ['Id', 'MSSubClass', 'MSZoning', 'LotFrontage', 'LotArea', 'Street',
+           'Alley', 'LotShape', 'LandContour', 'Utilities', 'LotConfig',
+           'LandSlope', 'Neighborhood', 'Condition1', 'Condition2', 'BldgType',
+           'HouseStyle', 'OverallQual', 'OverallCond', 'YearBuilt', 'YearRemodAdd',
+           'RoofStyle', 'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType',
+           'MasVnrArea', 'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual',
+           'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1',
+           'BsmtFinType2', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'Heating',
+           'HeatingQC', 'CentralAir', 'Electrical', '1stFlrSF', '2ndFlrSF',
+           'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath',
+           'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'KitchenQual',
+           'TotRmsAbvGrd', 'Functional', 'Fireplaces', 'FireplaceQu', 'GarageType',
+           'GarageYrBlt', 'GarageFinish', 'GarageCars', 'GarageArea', 'GarageQual',
+           'GarageCond', 'PavedDrive', 'WoodDeckSF', 'OpenPorchSF',
+           'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea', 'PoolQC',
+           'Fence', 'MiscFeature', 'MiscVal', 'MoSold', 'YrSold', 'SaleType',
+           'SaleCondition']
+    X = home_data[features]
+    X = clean_data(X)
+
+    if csv_name == "train":
+        y = home_data.SalePrice
+        return X, y
+    return X
+
+def clean_data(X):
+    # Convert string values to floats
+    X = pd.get_dummies(X)
+    
+    # Fill missing values
+    X = X.fillna(0)
+
+    return X
 
 # Split into data used to train and test the model
 train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
-
-# Convert string values to floats
-train_X = pd.get_dummies(train_X)
-val_X   = pd.get_dummies(val_X)
-
-# Align the columns
-train_X, val_X = train_X.align(val_X, join="left", axis=1, fill_value=0)
 
 def get_mae(max_leaf_nodes):
   '''
@@ -98,12 +104,10 @@ housing_model.fit(train_X, train_y)
 predictions = housing_model.predict(val_X)
 
 # Check sample submission for columns
-sample_path = "/kaggle/input/home-data-for-ml-course/sample_submission.csv"
-sample = pd.read_csv(sample_path)
-sample.describe()
+get_home_data('sample').describe()
 
 # Submit predictions to Kaggle
 submission = pd.DataFrame({
-    "Id": test_data["Id"],
+    "Id": get_home_data('test)["Id"],
     "SalePrice": predictions
 submission.to_csv("my_submission.csv", index=False)
