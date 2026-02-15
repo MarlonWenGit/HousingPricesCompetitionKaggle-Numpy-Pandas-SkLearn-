@@ -108,6 +108,6 @@ get_home_data('sample').describe()
 
 # Submit predictions to Kaggle
 submission = pd.DataFrame({
-    "Id": get_home_data('test)["Id"],
+    "Id": get_home_data('test')["Id"],
     "SalePrice": predictions
 submission.to_csv("my_submission.csv", index=False)
