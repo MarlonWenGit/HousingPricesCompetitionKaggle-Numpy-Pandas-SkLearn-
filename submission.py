@@ -102,11 +102,7 @@ housing_model = RandomForestRegressor(
     max_features="sqrt",
     max_leaf_nodes=200
 )
-housing_model.fit(train_X, y)
-
-
-# Check sample submission for columns
-get_home_data('sample').describe()
+housing_model.fit(train_X, train_y)
 
 test_X = get_data('test')
 train_X, test_X = train_X.align(test_X, join='left', axis=1, fill_value=0)
