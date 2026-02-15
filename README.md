@@ -1,30 +1,49 @@
-Final score: 0.16733 (using mean-square-root regression)
+# Ames Housing Price Prediction  
 
-Description
-Start here if...
-You have some experience with R or Python and machine learning basics. This is a perfect competition for data science students who have completed an online course in machine learning and are looking to expand their skill set before trying a featured competition. 
+**Final score:** 0.16733 (using mean-square-root regression)  
 
-💡Getting Started Notebook
-To get started quickly, feel free to take advantage of this starter notebook.
+---
 
-Competition Description
+## Description  
 
+**Start here if…**  
+You have some experience with R or Python and basic machine learning. This competition is perfect for data science students who have completed an online course in machine learning and want to expand their skills before tackling featured competitions.  
 
-Ask a home buyer to describe their dream house, and they probably won't begin with the height of the basement ceiling or the proximity to an east-west railroad. But this playground competition's dataset proves that much more influences price negotiations than the number of bedrooms or a white-picket fence.
+---
 
-With 79 explanatory variables describing (almost) every aspect of residential homes in Ames, Iowa, this competition challenges you to predict the final price of each home.
+## 💡 Getting Started Notebook  
 
-Practice Skills
-Creative feature engineering 
-Advanced regression techniques like random forest and gradient boosting
-Acknowledgments
-The Ames Housing dataset was compiled by Dean De Cock for use in data science education. It's an incredible alternative for data scientists looking for a modernized and expanded version of the often cited Boston Housing dataset. 
+To get started quickly, you can use the [starter notebook](#) (link to your notebook).  
 
-Photo by Tom Thain on Unsplash.
+---
 
-Evaluation
-Goal
-It is your job to predict the sales price for each house. For each Id in the test set, you must predict the value of the SalePrice variable. 
+## Competition Description  
 
-Metric
-Submissions are evaluated on Root-Mean-Squared-Error (RMSE) between the logarithm of the predicted value and the logarithm of the observed sales price. (Taking logs means that errors in predicting expensive houses and cheap houses will affect the result equally.)
+Ask a home buyer to describe their dream house, and they probably won't mention the height of the basement ceiling or proximity to an east-west railroad. But this competition’s dataset shows that much more influences price negotiations than just the number of bedrooms or a white-picket fence.  
+
+With **79 explanatory variables** describing nearly every aspect of residential homes in Ames, Iowa, your task is to **predict the final price of each home**.  
+
+---
+
+## Practice Skills  
+
+- Creative feature engineering  
+- Advanced regression techniques such as Random Forest and Gradient Boosting  
+
+---
+
+## Acknowledgments  
+
+The Ames Housing dataset was compiled by Dean De Cock for data science education. It’s a modernized and expanded alternative to the classic Boston Housing dataset.  
+
+_Photo by Tom Thain on Unsplash._  
+
+---
+
+## Evaluation  
+
+**Goal:**  
+Predict the sales price for each house. For each Id in the test set, predict the value of the `SalePrice` variable.  
+
+**Metric:**  
+Submissions are evaluated using **Root Mean Squared Log Error (RMSLE)** between the logarithm of the predicted value and the logarithm of the actual sale price. Taking logs ensures that errors in predicting expensive and cheap houses affect the result equally.  
