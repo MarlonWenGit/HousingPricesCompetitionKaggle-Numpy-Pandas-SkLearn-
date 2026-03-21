@@ -1,4 +1,4 @@
-# Ames Housing Price Prediction  
+# Ames Housing Price Prediction   
 
 **Final score:** 0.16733 (using mean-square-root regression)  
 
